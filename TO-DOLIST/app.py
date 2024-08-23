@@ -11,7 +11,7 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-db = sqlite3.connect("sqlite:///project.db")
+db = sqlite3.connect("project.db")
 
 @app.after_request
 def after_request(response):
