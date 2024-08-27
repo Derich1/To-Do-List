@@ -1,13 +1,133 @@
+/* Reset básico */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilos para a barra de navegação */
+nav {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    text-decoration: none;
+}
+
 .titulo-principal {
-    font-family: 'Arial', sans-serif;
-    font-size: 3rem; /* Tamanho grande para destacar o título */
+    margin: 0;
+    font-size: 2rem;
     font-weight: bold;
-    color: #2C3E50; /* Cor escura para contraste */
-    text-align: center; /* Alinhamento centralizado */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra leve para profundidade */
-    background: linear-gradient(135deg, #3498db, #9b59b6); /* Gradiente de fundo */
-    -webkit-background-clip: text; /* Clip do fundo no texto para efeito de gradiente */
+    color: #2C3E50;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #3498db, #9b59b6);
+    -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent; /* Preenchimento do texto transparente para mostrar gradiente */
+    -webkit-text-fill-color: transparent;
+    padding: 0.5rem;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-list li {
+    color: #007bff;
+    margin: 0;
+}
+
+.nav-list a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.nav-list a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para o conteúdo principal */
+main {
+    padding: 20px;
+}
+
+/* Estilos gerais para o formulário */
+form {
+    max-width: 400px; /* Largura máxima do formulário */
+    margin: auto; /* Centraliza o formulário */
+    padding: 1rem; /* Espaçamento interno */
+    border: 1px solid #ddd; /* Borda leve */
+    border-radius: 8px; /* Bordas arredondadas */
+    background-color: #f9f9f9; /* Fundo leve */
+}
+
+/* Estilos para os campos de entrada */
+input[type="text"], input[type="password"] {
+    width: 100%; /* Largura completa */
     padding: 0.5rem; /* Espaçamento interno */
+    margin-bottom: 1rem; /* Espaçamento inferior */
+    border: 1px solid #ccc; /* Borda leve */
+    border-radius: 4px; /* Bordas arredondadas */
+}
+
+/* Estilos para o botão de envio */
+button[type="submit"] {
+    width: 100%; /* Largura completa */
+    padding: 0.5rem; /* Espaçamento interno */
+    background-color: #007bff; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    border: none; /* Remove a borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor pointer */
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilo básico para o botão */
+.menu-button {
+    position: relative;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #fff; /* Cor de fundo padrão */
+    color: white;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    overflow: hidden; /* Esconde o conteúdo que sai dos limites do botão */
+    transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+}
+
+.menu-button:hover {
+    background-color: #fff; /* Cor de fundo ao passar o mouse */
+}
+
+/* Linha animada no botão */
+.menu-button::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #000; /* Cor da linha */
+    border-radius: 5px;
+    transform: scaleX(0); /* Começa invisível */
+    transition: transform 0.5s ease; /* Transição suave */
+    bottom: 0;
+    left: 0;
+}
+
+.menu-button:hover::before {
+    transform: scaleX(1); /* Expande a linha ao passar o mouse */
 }
