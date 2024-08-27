@@ -1,0 +1,14 @@
+.titulo-principal {
+    font-family: 'Arial', sans-serif;
+    font-size: 3rem; /* Tamanho grande para destacar o título */
+    font-weight: bold;
+    color: #2C3E50; /* Cor escura para contraste */
+    text-align: center; /* Alinhamento centralizado */
+    margin: 1rem 0; /* Espaçamento vertical */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra leve para profundidade */
+    background: linear-gradient(135deg, #3498db, #9b59b6); /* Gradiente de fundo */
+    -webkit-background-clip: text; /* Clip do fundo no texto para efeito de gradiente */
+    background-clip: text;
+    -webkit-text-fill-color: transparent; /* Preenchimento do texto transparente para mostrar gradiente */
+    padding: 0.5rem; /* Espaçamento interno */
+}
