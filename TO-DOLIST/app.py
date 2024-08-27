@@ -21,6 +21,11 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+@app.route("/")
+@login_required
+def index():
+    return render_template("index.html")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     # Forget any user_id
@@ -30,11 +35,11 @@ def login():
     if request.method == "POST":
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            return 
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            return 
 
         # Query database for username
         rows = db.execute(
@@ -45,7 +50,7 @@ def login():
         if len(rows) != 1 or not check_password_hash(
             rows[0]["hash"], request.form.get("password")
         ):
-            return apology("invalid username and/or password", 403)
+            return
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
