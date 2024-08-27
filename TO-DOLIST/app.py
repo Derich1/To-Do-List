@@ -12,8 +12,10 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config['ENV'] = 'development'
 Session(app)
-
-db = sqlite3.connect("project.db", check_same_thread=False)
+def get_db():
+    connection = sqlite3.connect('project.db', check_same_thread=False)
+    connection.row_factory = sqlite3.Row
+    return connection
 
 @app.after_request
 def after_request(response):
@@ -46,20 +48,21 @@ def login():
         elif not request.form.get("password"):
             return apology("must provide password", 403)
         # Query database for username
-        rows = db.execute(
-            "SELECT * FROM users WHERE username = ?", request.form.get("username")
-        )
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE username = ?", (request.form.get("username"),))
+        user = cursor.fetchone()
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(
-            rows[0]["hash"], request.form.get("password")
-        ):
+        if user is None or not check_password_hash(user["hash"], request.form.get("password")):
+            conn.close()
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = user["id"]
 
         # Redirect user to home page
+        conn.close()
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -84,14 +87,22 @@ def register():
             return apology("Missing password confirmation")
 
         if confirm != password:
-            return apology("Passwords doesn't match with")
-
-        usernames = db.execute("SELECT * FROM users WHERE username = ?", (username,))
-        if not usernames:
+            return apology("Passwords don't match")
+        
+        db = get_db()
+        cursor = db.cursor()
+        
+        cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+        user = cursor.fetchone() # cursor.fetchone() retorna None se não encontrar uma linha.
+        
+        if user is None:
             hashed_pwd = generate_password_hash(password)
-            db.execute("INSERT INTO users (username, hash) VALUES (?,?)", (username, hashed_pwd))
+            cursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, hashed_pwd))
+            db.commit()
+            db.close()
+            return redirect("/")
         else:
+            db.close()
             return apology("This username already exists")
-        return redirect("/")
     else:
         return render_template("register.html")
