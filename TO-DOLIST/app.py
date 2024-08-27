@@ -4,15 +4,16 @@ import sqlite3
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
-from helpers import login_required
+from helpers import login_required, apology
 
 app = Flask(__name__)
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['ENV'] = 'development'
 Session(app)
 
-db = sqlite3.connect("project.db")
+db = sqlite3.connect("project.db", check_same_thread=False)
 
 @app.after_request
 def after_request(response):
@@ -27,6 +28,9 @@ def after_request(response):
 def index():
     return render_template("index.html")
 
+if __name__ == '__main__':
+    app.run()
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     # Forget any user_id
@@ -36,12 +40,11 @@ def login():
     if request.method == "POST":
         # Ensure username was submitted
         if not request.form.get("username"):
-            return redirect("/")
+            return apology("must provide username", 403)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return redirect("/")
-
+            return apology("must provide password", 403)
         # Query database for username
         rows = db.execute(
             "SELECT * FROM users WHERE username = ?", request.form.get("username")
@@ -51,7 +54,7 @@ def login():
         if len(rows) != 1 or not check_password_hash(
             rows[0]["hash"], request.form.get("password")
         ):
-            return redirect("/")
+            return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -70,27 +73,25 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         if not username:
-            return redirect("/")
+            return apology("Missing username")
 
         password = request.form.get("password")
         if not password:
-            return redirect("/")
+            return apology("Missing Password")
 
         confirm = request.form.get("confirmation")
         if not confirm:
-            return redirect("/")
+            return apology("Missing password confirmation")
 
         if confirm != password:
-            return redirect("/")
+            return apology("Passwords doesn't match with")
 
-        usernames = db.execute("SELECT * FROM users WHERE username = ?", username)
+        usernames = db.execute("SELECT * FROM users WHERE username = ?", (username,))
         if not usernames:
             hashed_pwd = generate_password_hash(password)
-            db.execute("INSERT INTO users (username, hash) VALUES (?,?)", username, hashed_pwd)
+            db.execute("INSERT INTO users (username, hash) VALUES (?,?)", (username, hashed_pwd))
         else:
-            return redirect("/")
+            return apology("This username already exists")
         return redirect("/")
     else:
         return render_template("register.html")
-    
-# onde dá erro eu preciso criar alguma coisa pra acontecer ao invés de so redirecionar pra outro lugar, bad design pra krl
