@@ -40,13 +40,7 @@ def login():
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        # Ensure username was submitted
-        if not request.form.get("username"):
-            return apology("must provide username", 403)
 
-        # Ensure password was submitted
-        elif not request.form.get("password"):
-            return apology("must provide password", 403)
         # Query database for username
         conn = get_db()
         cursor = conn.cursor()
@@ -82,16 +76,10 @@ def register():
     """Register user"""
     if request.method == "POST":
         username = request.form.get("username")
-        if not username:
-            return apology("Missing username")
-
+        
         password = request.form.get("password")
-        if not password:
-            return apology("Missing Password")
 
         confirm = request.form.get("confirmation")
-        if not confirm:
-            return apology("Missing password confirmation")
 
         if confirm != password:
             return apology("Passwords don't match")
