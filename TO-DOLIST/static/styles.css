@@ -62,6 +62,75 @@ header {
     transform: scaleX(1);
 }
 
+.wrapper{
+    position: relative;
+    width: 400px;
+    height: 440px;
+    background: transparent;
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0px 0px 30px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper .form-box{
+    width: 100%;
+    padding: 40px;
+}
+
+/* palavra login em cima de onde coloca o username e password */
+.form-box h1{
+    font-size: 3em;
+    color: #000;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+/* onde a pessoa vai escrever o login */
+.input-box{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 5px 0;
+}
+
+.input-box input{
+    width: 100%;
+    height: 35px;
+    background: transparent;
+    border: color(black);
+    border-radius: 4px;
+    outline: none;
+    padding: 5px;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.btn {
+    width: 100%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #000;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.btn:hover{
+    color: #fff;
+    background: #000;
+    border-color: #fff;
+}
+
+/* pra dar certo em qualquer tela */
 @media only screen and (max-width: 780px){
     header{
         padding: 20px 50px;
