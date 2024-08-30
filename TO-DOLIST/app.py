@@ -28,7 +28,14 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    return render_template("index.html")
+    conn = get_db()
+    cursor = conn.cursor()
+    user_id = session.get('user_id')
+    cursor.execute("SELECT task FROM tasks WHERE user_id = ?", (request.form.get("user_id"),))
+    tasks = cursor.fetchall()
+    conn.close()
+
+    return render_template("index.html", tasks=tasks)
 
 if __name__ == '__main__':
     app.run()
@@ -101,3 +108,18 @@ def register():
             return apology("This username already exists")
     else:
         return render_template("register.html")
+    
+
+@app.route("/task", methods =["GET", "POST"])
+@login_required
+def task():
+    if request.method == "GET":
+        return render_template("task.html")
+    
+    else:
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO tasks (user_id, task_title, task) VALUES (?, ?, ?)", ("user_id", "task_title", "task"))
+        conn.commit()
+        conn.close()
+        return redirect("/")

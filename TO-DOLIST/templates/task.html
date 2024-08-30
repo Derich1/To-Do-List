@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create Task
+{% endblock %}
+
+
+{% block main %}
+    <div class="wrapper">
+        <div class="for-box login">
+            <h1>Create the task</h1>
+            <form action="/task" method="post">
+                <div class="input-box">
+                    <input autocomplete="off" placeholder="Name of the task" type="text" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" placeholder="Description of the task" required>
+                </div>
+                <button class="btn" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

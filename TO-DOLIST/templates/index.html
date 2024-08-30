@@ -1,11 +1,18 @@
 {% extends "layout.html" %}
 
-{% block main %}
+{% block title %}
+    HomePage
+{% endblock %}
 
+{% block main %}
     <table>
         <tr>
             <th>Things to do</th>
         </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task }}</td>
+            </tr>
+        {% endfor %}
     </table>
-
 {% endblock %}
