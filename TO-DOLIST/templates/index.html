@@ -5,17 +5,35 @@
 {% endblock %}
 
 {% block main %}
-    <table>
-        <tr>
-            <th>Task</th>
-        </tr>
+<script>
+    function deleteTask(taskId) {
+        fetch(`/${taskId}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Task deleted successfully!');
+                location.reload();
+            } else {
+                alert('Error to delete task');
+            }
+        })
+        .catch(error => console.error('Erro:', error));
+    }
+</script>
+
+    <h1 class="title">List of Tasks</h1>
         {% for task in tasks %}
-            <tr>
-                <td>{{ task[0] }}</td>
-            </tr>
-            <tr>
-                <td>{{ task[1] }}</td>
-            </tr>
+        <div class="wrapper">
+            <div class="form-box login">
+            <h3>Task</h3>
+                <ul>
+                    <li>{{ task[0] }}</li>
+                    <p>{{ task[1] }}</p>
+                </ul>
+                <button onclick="deleteTask('{{ task[2] }}')">Delete</button>
+            </div>
+        </div>
         {% endfor %}
-    </table>
 {% endblock %}
+

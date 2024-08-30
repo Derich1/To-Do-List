@@ -1,7 +1,7 @@
 import os
 
 import sqlite3
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, jsonify
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required, apology
@@ -31,11 +31,22 @@ def index():
     conn = get_db()
     cursor = conn.cursor()
     user_id = session.get('user_id')
-    cursor.execute("SELECT task_title, task FROM tasks WHERE user_id = ?", (user_id,))
+    cursor.execute("SELECT task_title, task, id FROM tasks WHERE user_id = ?", (user_id,))
     tasks = cursor.fetchall()
     conn.close()
 
     return render_template("index.html", tasks=tasks)
+
+@app.route('/<int:task_id>', methods=['DELETE'])
+@login_required
+def delete_task(task_id):
+    conn = get_db()
+    cursor = conn.cursor()
+    user_id = session.get('user_id')
+    cursor.execute("DELETE FROM tasks WHERE id = ? AND user_id = ?", (task_id, user_id))
+    conn.commit()
+    conn.close()
+    return jsonify({'message': 'Task deleted successfully'}), 200
 
 if __name__ == '__main__':
     app.run()
