@@ -7,11 +7,14 @@
 {% block main %}
     <table>
         <tr>
-            <th>Things to do</th>
+            <th>Task</th>
         </tr>
         {% for task in tasks %}
             <tr>
-                <td>{{ task }}</td>
+                <td>{{ task[0] }}</td>
+            </tr>
+            <tr>
+                <td>{{ task[1] }}</td>
             </tr>
         {% endfor %}
     </table>

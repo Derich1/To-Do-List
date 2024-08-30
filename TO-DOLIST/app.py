@@ -31,7 +31,7 @@ def index():
     conn = get_db()
     cursor = conn.cursor()
     user_id = session.get('user_id')
-    cursor.execute("SELECT task FROM tasks WHERE user_id = ?", (request.form.get("user_id"),))
+    cursor.execute("SELECT task_title, task FROM tasks WHERE user_id = ?", (user_id,))
     tasks = cursor.fetchall()
     conn.close()
 
@@ -117,9 +117,12 @@ def task():
         return render_template("task.html")
     
     else:
+        user_id = session["user_id"]
+        task_title = request.form.get("task_title")
+        task = request.form.get("description")
         conn = get_db()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO tasks (user_id, task_title, task) VALUES (?, ?, ?)", ("user_id", "task_title", "task"))
+        cursor.execute("INSERT INTO tasks (user_id, task_title, task) VALUES (?, ?, ?)", (user_id, task_title, task))
         conn.commit()
         conn.close()
         return redirect("/")

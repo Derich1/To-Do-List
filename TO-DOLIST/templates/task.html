@@ -11,10 +11,10 @@
             <h1>Create the task</h1>
             <form action="/task" method="post">
                 <div class="input-box">
-                    <input autocomplete="off" placeholder="Name of the task" type="text" required>
+                    <input name="task_title" autocomplete="off" placeholder="Name of the task" type="text" required>
                 </div>
                 <div class="input-box">
-                    <input type="text" placeholder="Description of the task" required>
+                    <input name="description" type="text" placeholder="Description of the task" required>
                 </div>
                 <button class="btn" type="submit">Submit</button>
             </form>
