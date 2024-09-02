@@ -24,16 +24,17 @@
 
     <h1 class="title">List of Tasks</h1>
         {% for task in tasks %}
-        <div class="wrapper">
-            <div class="form-box login">
-            <h3>Task</h3>
-                <ul>
-                    <li>{{ task[0] }}</li>
-                    <p>{{ task[1] }}</p>
-                </ul>
-                <button onclick="deleteTask('{{ task[2] }}')">Delete</button>
+        <div class="task-list">
+            <div class="wrapper">
+                <div class="form-box">
+                    <ul>
+                        <li>{{ task[0] }}</li>
+                        <p>{{ task[1] }}</p>
+                    </ul>
+                    <button onclick="deleteTask('{{ task[2] }}')" class="delete">Delete</button>
+                </div>
             </div>
         </div>
-        {% endfor %}
+            {% endfor %}
 {% endblock %}
 

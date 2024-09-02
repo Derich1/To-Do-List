@@ -13,7 +13,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 app.config['ENV'] = 'development'
 Session(app)
 def get_db():
-    connection = sqlite3.connect('project.db', check_same_thread=False)
+    connection = sqlite3.connect('project.db', check_same_thread=False, timeout=10)
     connection.row_factory = sqlite3.Row
     return connection
 
@@ -28,24 +28,22 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    conn = get_db()
-    cursor = conn.cursor()
-    user_id = session.get('user_id')
-    cursor.execute("SELECT task_title, task, id FROM tasks WHERE user_id = ?", (user_id,))
-    tasks = cursor.fetchall()
-    conn.close()
+    with get_db() as conn:
+        cursor = conn.cursor()
+        user_id = session.get('user_id')
+        cursor.execute("SELECT task_title, task, id FROM tasks WHERE user_id = ?", (user_id,))
+        tasks = cursor.fetchall()
 
     return render_template("index.html", tasks=tasks)
 
 @app.route('/<int:task_id>', methods=['DELETE'])
 @login_required
 def delete_task(task_id):
-    conn = get_db()
-    cursor = conn.cursor()
-    user_id = session.get('user_id')
-    cursor.execute("DELETE FROM tasks WHERE id = ? AND user_id = ?", (task_id, user_id))
-    conn.commit()
-    conn.close()
+    with get_db() as conn:
+        cursor = conn.cursor()
+        user_id = session.get('user_id')
+        cursor.execute("DELETE FROM tasks WHERE id = ? AND user_id = ?", (task_id, user_id))
+        conn.commit()
     return jsonify({'message': 'Task deleted successfully'}), 200
 
 if __name__ == '__main__':
@@ -131,9 +129,8 @@ def task():
         user_id = session["user_id"]
         task_title = request.form.get("task_title")
         task = request.form.get("description")
-        conn = get_db()
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO tasks (user_id, task_title, task) VALUES (?, ?, ?)", (user_id, task_title, task))
-        conn.commit()
-        conn.close()
+        with get_db() as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO tasks (user_id, task_title, task) VALUES (?, ?, ?)", (user_id, task_title, task))
+            conn.commit()
         return redirect("/")
