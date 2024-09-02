@@ -13,11 +13,11 @@
 
     <body>
         <header>
-            <h2 class="logo">TO-DO List</h2>
+            <a href="/" class="logo">TO-DO List</a>
             <nav class="navigation">
                     {% if session["user_id"] %}
-                        <a href="/logout">Logout</a>
                         <a href="/task">Create a Task</a>
+                        <a href="/logout">Logout</a>
                     {% else %}
                         <a href="/register">Register</a>
                         <a href="/login">Login</a>

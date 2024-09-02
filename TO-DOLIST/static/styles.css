@@ -32,6 +32,9 @@ header {
     font-size: 2em;
     color: #fff;
     user-select: none;
+    text-decoration: none; /* Remove o sublinhado padrão dos links */
+    user-select: none; /* Impede a seleção do texto */
+    font-weight: 600;
 }
 
 /* Register e login la no cabeçalho */
