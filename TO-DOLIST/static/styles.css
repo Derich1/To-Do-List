@@ -161,6 +161,27 @@ header {
     margin-bottom: 20px;
 }
 
+.task-list .wrapper .form-box li {
+    user-select: none;
+}
+
+.task-list .wrapper .form-box p {
+    width: 20ch;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    opacity: 0;
+    max-height: 0; /* Esconde o elemento por padrão */
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.3s ease; /* Transição suave */
+    user-select: none;
+}
+
+.task-list .wrapper .form-box:hover p {
+    opacity: 1;
+    max-height: 100px;
+}
+
 .task-list .wrapper .form-box{
     display: flex; /* Adicionada para alinhamento horizontal dos itens */
     align-items: center; /* Alinha os itens verticalmente */
