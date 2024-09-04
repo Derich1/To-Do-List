@@ -38,6 +38,7 @@ def index():
 
 
 @app.route('/update_task/<int:task_id>', methods=['POST'])
+@login_required
 def update_task(task_id):
     data = request.get_json()
     new_title = data.get('title')
@@ -106,6 +107,7 @@ def login():
         return render_template("login.html")
     
 @app.route("/logout")
+@login_required
 def logout():
     # Forget any user_id
     session.clear()
