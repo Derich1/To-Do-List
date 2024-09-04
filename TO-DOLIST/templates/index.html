@@ -20,17 +20,62 @@
         })
         .catch(error => console.error('Erro:', error));
     }
+
+    function editTask(taskId) {
+        const taskElement = document.getElementById(`task-${taskId}`);
+        const titleElement = document.getElementById(`task-title-${taskId}`);
+        const descriptionElement = document.getElementById(`task-desc-${taskId}`);
+
+        // Adiciona a classe de edição ao contêiner da tarefa
+        taskElement.classList.add('editing');
+
+        if (!document.getElementById(`edit-title-${taskId}`)) {
+            const currentTitle = titleElement.innerText;
+            const currentDescription = descriptionElement.innerText;
+
+            titleElement.innerHTML = `
+                <input type="text" id="edit-title-${taskId}" class="edit-input" value="${currentTitle}">
+            `;
+
+            descriptionElement.innerHTML = `
+                <textarea id="edit-desc-${taskId}" class="edit-textarea">${currentDescription}</textarea>
+            `;
+
+            // Adiciona o botão "Salvar" após o campo de descrição
+            descriptionElement.insertAdjacentHTML('afterend', `
+                <button id="save-button-${taskId}" class="save-button" onclick="saveTask(${taskId})">Salvar</button>
+            `);
+        }
+    }
+
+    function saveTask(taskId) {
+        const taskElement = document.getElementById(`task-${taskId}`);
+        taskElement.classList.remove('editing');
+
+        // Atualiza o título e a descrição conforme o conteúdo dos campos de edição
+        const newTitle = document.getElementById(`edit-title-${taskId}`).value;
+        const newDescription = document.getElementById(`edit-desc-${taskId}`).value;
+
+        document.getElementById(`task-title-${taskId}`).innerText = newTitle;
+        document.getElementById(`task-desc-${taskId}`).innerText = newDescription;
+
+        // Remove o botão "Salvar" após a edição
+        document.getElementById(`save-button-${taskId}`).remove();
+    }
+
+
 </script>
 
     <h1 class="title">List of Tasks</h1>
         {% for task in tasks %}
-        <div class="task-list">
+        <div id="task-{{ task[2] }}" class="task-list">
             <div class="wrapper">
                 <div class="form-box">
                     <ul>
-                        <li>{{ task[0] }}</li>
-                        <p class="task-description">{{ task[1] }}</p>
+                        <li id="task-title-{{ task[2] }}">{{ task[0] }}</li>
+                        <p id="task-desc-{{ task[2] }}" class="task-description">{{ task[1] }}</p>
                     </ul>
+                    <button onclick="editTask('{{ task[2] }}')" class="edit-button">Edit</button>
                     <button onclick="deleteTask('{{ task[2] }}')" class="delete">Delete</button>
                 </div>
             </div>

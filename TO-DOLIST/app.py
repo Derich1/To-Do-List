@@ -36,6 +36,32 @@ def index():
 
     return render_template("index.html", tasks=tasks)
 
+
+@app.route('/update_task/<int:task_id>', methods=['POST'])
+def update_task(task_id):
+    data = request.get_json()
+    new_title = data.get('title')
+    new_description = data.get('description')
+    
+    with get_db() as conn:
+        cursor = conn.cursor()
+        user_id = session.get('user_id')
+
+        # Verifica se a tarefa pertence ao usuário logado
+        cursor.execute("SELECT id FROM tasks WHERE id = ? AND user_id = ?", (task_id, user_id))
+        task = cursor.fetchone()
+
+        if task is None:
+            return jsonify({'error': 'Task not found or unauthorized'}), 403
+
+        # Atualiza o título e a descrição da tarefa
+        cursor.execute("UPDATE tasks SET task_title = ?, task = ? WHERE id = ?", 
+                       (new_title, new_description, task_id))
+        conn.commit()
+    
+    return jsonify({'newTitle': new_title, 'newDescription': new_description})
+
+
 @app.route('/<int:task_id>', methods=['DELETE'])
 @login_required
 def delete_task(task_id):

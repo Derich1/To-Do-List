@@ -156,7 +156,7 @@ header {
     box-shadow: 0px 0px 30px rgba(0,0,0,0.3);
     display: flex;
     justify-content: center;
-    flex-direction: column; /* acabei de adicionar */
+    flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
 }
@@ -188,6 +188,12 @@ header {
     justify-content: space-between; /* Espaça os itens horizontalmente */
 }
 
+.task-list .wrapper:hover .form-box p,
+.task-list .wrapper.editing .form-box p {
+    opacity: 1;
+    max-height: 100px;
+}
+
 .delete{
     width: 70px;
     height: 40px;
@@ -215,6 +221,75 @@ header {
     text-align: center;
     margin-bottom: 20px;
 }
+
+.edit-button {
+    background-color: #3498db; /* Cor de fundo azul */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    padding: 10px 15px; /* Espaçamento interno */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de mãozinha ao passar o mouse */
+    font-size: 14px; /* Tamanho da fonte */
+    transition: background-color 0.3s ease; /* Transição suave da cor de fundo */
+}
+
+.edit-button:hover {
+    background-color: #2980b9; /* Cor de fundo mais escura ao passar o mouse */
+}
+
+.edit-button:active {
+    background-color: #1c5a7c; /* Cor de fundo ainda mais escura ao clicar */
+}
+
+.edit-button:focus {
+    outline: none; /* Remove a borda padrão ao focar no botão */
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5); /* Adiciona um efeito de foco */
+}
+
+.edit-input {
+    width: 100%; /* Largura completa do campo */
+    padding: 8px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 14px; /* Tamanho da fonte */
+    box-sizing: border-box; /* Inclui padding e border na largura total */
+}
+
+.edit-textarea {
+    width: 100%; /* Largura completa do campo */
+    padding: 8px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: 4px; /* Bordas arredondadas */
+    font-size: 14px; /* Tamanho da fonte */
+    box-sizing: border-box; /* Inclui padding e border na largura total */
+    resize: vertical; /* Permite o redimensionamento vertical */
+}
+
+.save-button {
+    background-color: #2ecc71; /* Cor de fundo verde */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    padding: 10px 15px; /* Espaçamento interno */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de mãozinha ao passar o mouse */
+    font-size: 14px; /* Tamanho da fonte */
+    transition: background-color 0.3s ease; /* Transição suave da cor de fundo */
+    margin-top: 10px; /* Espaçamento acima do botão */
+}
+
+.save-button:hover {
+    background-color: #27ae60; /* Cor de fundo mais escura ao passar o mouse */
+}
+
+.save-button:active {
+    background-color: #1e8449; /* Cor de fundo ainda mais escura ao clicar */
+}
+
+.save-button:focus {
+    outline: none; /* Remove a borda padrão ao focar no botão */
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.5); /* Adiciona um efeito de foco */
+}
+
 
 #expansion {
     width: 100%; /* Para garantir que o textarea ocupe toda a largura disponível */
