@@ -22,45 +22,60 @@
     }
 
     function editTask(taskId) {
-        const taskElement = document.getElementById(`task-${taskId}`);
-        const titleElement = document.getElementById(`task-title-${taskId}`);
-        const descriptionElement = document.getElementById(`task-desc-${taskId}`);
+    const taskElement = document.getElementById(`task-${taskId}`);
+    const titleElement = document.getElementById(`task-title-${taskId}`);
+    const descriptionElement = document.getElementById(`task-desc-${taskId}`);
+    const editButton = document.getElementById(`edit-button-${taskId}`);
+    const deleteButton = document.getElementById(`delete-button-${taskId}`);
 
-        // Adiciona a classe de edição ao contêiner da tarefa
-        taskElement.classList.add('editing');
+    // Adiciona a classe de edição ao contêiner da tarefa
+    taskElement.classList.add('editing');
 
-        if (!document.getElementById(`edit-title-${taskId}`)) {
-            const currentTitle = titleElement.innerText;
-            const currentDescription = descriptionElement.innerText;
+    if (!document.getElementById(`edit-title-${taskId}`)) {
+        const currentTitle = titleElement.innerText;
+        const currentDescription = descriptionElement.innerText;
 
-            titleElement.innerHTML = `
-                <input type="text" id="edit-title-${taskId}" class="edit-input" value="${currentTitle}">
-            `;
+        titleElement.innerHTML = `
+            <input type="text" id="edit-title-${taskId}" class="edit-input" value="${currentTitle}">
+        `;
 
-            descriptionElement.innerHTML = `
-                <textarea id="edit-desc-${taskId}" class="edit-textarea">${currentDescription}</textarea>
-            `;
+        descriptionElement.innerHTML = `
+            <textarea id="edit-desc-${taskId}" class="edit-textarea">${currentDescription}</textarea>
+        `;
 
-            // Adiciona o botão "Salvar" após o campo de descrição
-            descriptionElement.insertAdjacentHTML('afterend', `
-                <button id="save-button-${taskId}" class="save-button" onclick="saveTask(${taskId})">Salvar</button>
-            `);
-        }
+        // Adiciona o botão "Salvar" após o campo de descrição
+        descriptionElement.insertAdjacentHTML('afterend', `
+            <button id="save-button-${taskId}" class="save-button" onclick="saveTask(${taskId})">Salvar</button>
+        `);
+
+        // Esconde os botões "Edit" e "Delete"
+        editButton.style.display = 'none';
+        deleteButton.style.display = 'none';
     }
+}
 
     function saveTask(taskId) {
         const taskElement = document.getElementById(`task-${taskId}`);
+        const titleElement = document.getElementById(`task-title-${taskId}`);
+        const descriptionElement = document.getElementById(`task-desc-${taskId}`);
+        const editButton = document.getElementById(`edit-button-${taskId}`);
+        const deleteButton = document.getElementById(`delete-button-${taskId}`);
+
         taskElement.classList.remove('editing');
 
         // Atualiza o título e a descrição conforme o conteúdo dos campos de edição
         const newTitle = document.getElementById(`edit-title-${taskId}`).value;
         const newDescription = document.getElementById(`edit-desc-${taskId}`).value;
 
-        document.getElementById(`task-title-${taskId}`).innerText = newTitle;
-        document.getElementById(`task-desc-${taskId}`).innerText = newDescription;
+        titleElement.innerText = newTitle;
+        descriptionElement.innerText = newDescription;
 
-        // Remove o botão "Salvar" após a edição
+        // Remove o botão "Salvar"
         document.getElementById(`save-button-${taskId}`).remove();
+
+        // Mostra os botões "Edit" e "Delete"
+        editButton.style.display = 'inline-block';
+        deleteButton.style.display = 'inline-block';
     }
 
 

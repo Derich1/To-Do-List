@@ -170,28 +170,14 @@ header {
     white-space: pre-wrap;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    opacity: 0;
-    max-height: 0; /* Esconde o elemento por padrão */
     overflow: hidden;
-    transition: opacity 0.3s ease, max-height 0.3s ease; /* Transição suave */
     user-select: none;
-}
-
-.task-list .wrapper .form-box:hover p {
-    opacity: 1;
-    max-height: 100px;
 }
 
 .task-list .wrapper .form-box{
     display: flex; /* Adicionada para alinhamento horizontal dos itens */
     align-items: center; /* Alinha os itens verticalmente */
     justify-content: space-between; /* Espaça os itens horizontalmente */
-}
-
-.task-list .wrapper:hover .form-box p,
-.task-list .wrapper.editing .form-box p {
-    opacity: 1;
-    max-height: 100px;
 }
 
 .delete{
@@ -262,7 +248,17 @@ header {
     border-radius: 4px; /* Bordas arredondadas */
     font-size: 14px; /* Tamanho da fonte */
     box-sizing: border-box; /* Inclui padding e border na largura total */
-    resize: vertical; /* Permite o redimensionamento vertical */
+    resize: none; /* Permite o redimensionamento vertical */
+    margin-top: -25px;
+}
+
+.task-list.editing .edit-button,
+.task-list.editing .delete {
+    display: none;
+}
+
+.task-list.editing .save-button {
+    display: inline-block; /* Certifique-se de que o botão "Salvar" apareça */
 }
 
 .save-button {
@@ -274,7 +270,6 @@ header {
     cursor: pointer; /* Cursor de mãozinha ao passar o mouse */
     font-size: 14px; /* Tamanho da fonte */
     transition: background-color 0.3s ease; /* Transição suave da cor de fundo */
-    margin-top: 10px; /* Espaçamento acima do botão */
 }
 
 .save-button:hover {
