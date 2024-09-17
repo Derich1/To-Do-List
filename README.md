@@ -1,6 +1,5 @@
 # To-do List
 
-<<<<<<< HEAD
 #### Video Demo: https://youtu.be/Gq92cKKt_dI
 
 #### Description:
