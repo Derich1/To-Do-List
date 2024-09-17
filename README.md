@@ -1,4 +1,4 @@
-# To-do List
+# To-Do List
 
 #### Video Demo: https://youtu.be/Gq92cKKt_dI
 
